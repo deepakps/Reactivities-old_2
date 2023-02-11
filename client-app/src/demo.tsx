@@ -10,7 +10,7 @@ data = '42'
 // '!' is used to override the behavior of the typescript.
 // Date - 11th Feb, 2023.
 
-interface Duck {
+export interface Duck {
     name: string;
     numLegs: number;
     makeSound?: (sound: string) => void;
