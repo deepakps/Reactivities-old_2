@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// div id="root" which is present in Public>index.html is retrieved below & then rendered.
+// Date - 10th Feb, 2023.
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
