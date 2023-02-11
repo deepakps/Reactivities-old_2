@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
+import { Header } from 'semantic-ui-react';
+import List from 'semantic-ui-react/dist/commonjs/elements/List';
 // Commented demo code.
 // Date - 11th Feb, 2023.
 // import { ducks } from './demo';
@@ -18,28 +20,26 @@ function App() {
   useEffect(() => {
     axios.get('http://localhost:5000/api/activities')
       .then(respose => {
-        console.log(respose);
+        // console.log(respose);
         setActivities(respose.data);
       });
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        {/* {ducks.map(duck => (
+    <div>
+      <Header as='h2' icon='users' content='Reactivities' />
+      {/* {ducks.map(duck => (
           // When we are looping over in react then you will need to assign key for opening element.
           // Date - 11th Feb, 2023. 
           <DuckItem duck={duck} key={duck.name} />
         ))} */}
-        <ul>
-          {activities.map((activity: any) => (
-            <li key={activity.id}>
-              {activity.title}
-            </li>
-          ))}
-        </ul>
-      </header>
+      <List>
+        {activities.map((activity: any) => (
+          <List.Item key={activity.id}>
+            {activity.title}
+          </List.Item>
+        ))}
+      </List>
     </div>
   );
 }
