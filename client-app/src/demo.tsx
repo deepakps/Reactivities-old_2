@@ -13,13 +13,15 @@ data = '42'
 export interface Duck {
     name: string;
     numLegs: number;
-    makeSound?: (sound: string) => void;
+    // makeSound?: (sound: string) => void;
+    makeSound: (sound: string) => void;
 }
 
 const duck1: Duck = {
     name: 'Hughes',
-    numLegs: 2//,
+    numLegs: 2,
     // makeSound: (sound: any) => console.log(sound)
+    makeSound: (sound: any) => console.log(sound)
 }
 
 const duck2: Duck = {
@@ -28,6 +30,6 @@ const duck2: Duck = {
     makeSound: (sound: any) => console.log(sound)
 }
 
-duck1.makeSound!('quack');
+duck1.makeSound('quack');
 
 export const ducks = [duck1, duck2];
