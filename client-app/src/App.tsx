@@ -21,7 +21,7 @@ function App() {
         console.log(respose);
         setActivities(respose.data);
       });
-  })
+  }, []);
 
   return (
     <div className="App">
