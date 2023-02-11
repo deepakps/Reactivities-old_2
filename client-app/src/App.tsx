@@ -1,14 +1,28 @@
 // This is App which gets rendered inside src>index.tsx.
 // Date - 10th Feb, 2023.
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import axios from 'axios';
 // Commented demo code.
 // Date - 11th Feb, 2023.
 // import { ducks } from './demo';
 // import DuckItem from './DuckItem';
 
 function App() {
+  const [activities, setActivities] = useState([]);
+
+  // When we make use of useEffect, we need to give some dependencies. Otherwise it could fire infinite times.
+  // Therefore, adding second parameter as array in useEffect which will lead to execute only one time.
+  // Date - 11th Feb, 2023.
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/activities')
+      .then(respose => {
+        console.log(respose);
+        setActivities(respose.data);
+      });
+  })
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,17 +32,13 @@ function App() {
           // Date - 11th Feb, 2023. 
           <DuckItem duck={duck} key={duck.name} />
         ))} */}
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload!!!
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <ul>
+          {activities.map((activity: any) => (
+            <li key={activity.id}>
+              {activity.title}
+            </li>
+          ))}
+        </ul>
       </header>
     </div>
   );
