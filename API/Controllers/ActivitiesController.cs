@@ -20,5 +20,13 @@ namespace API.Controllers
         {
             return await Mediator.Send(new Details.Query { Id = id });
         }
+
+        // We can make use of attribute [FromBody] to specifically tell the API compiler where to find request attributes.
+        // Date - 13th Feb, 2023.
+        [HttpPost]
+        public async Task<IActionResult> CreateActivity(Activity activity)
+        {
+            return Ok(await Mediator.Send(new Create.Command { Activity = activity }));
+        }
     }
 }
