@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
+// Date - 13th Feb, 2023.
 namespace API.Controllers
 {
     public class ActivitiesController : BaseApiController
