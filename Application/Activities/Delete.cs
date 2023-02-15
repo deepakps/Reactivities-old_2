@@ -2,6 +2,7 @@ using Domain;
 using MediatR;
 using Persistence;
 
+// Date - 15th Feb, 2023.
 namespace Application.Activities
 {
     public class Delete
