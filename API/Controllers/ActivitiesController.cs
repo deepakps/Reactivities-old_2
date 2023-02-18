@@ -10,10 +10,12 @@ namespace API.Controllers
 {
     public class ActivitiesController : BaseApiController
     {
+        // CancellationToken code commented as it was writen for demo purpose.
+        // Date - 18th Feb, 2023.
         [HttpGet] //api/activities
-        public async Task<ActionResult<List<Activity>>> GetActivities()
+        public async Task<ActionResult<List<Activity>>> GetActivities(/*CancellationToken ct*/)
         {
-            return await Mediator.Send(new List.Query());
+            return await Mediator.Send(new List.Query()/*, ct*/);
         }
 
         [HttpGet("{id}")] //api/activities/{id}
