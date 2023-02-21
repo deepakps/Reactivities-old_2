@@ -1,3 +1,7 @@
+/* 
+This file is for demo purpose. 
+Date - 21th Feb, 2023. 
+*/
 import React from "react";
 import { Duck } from "./demo";
 
