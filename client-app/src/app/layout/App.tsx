@@ -1,8 +1,10 @@
 // This is App which gets rendered inside src>index.tsx.
 // Date - 10th Feb, 2023.
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
+/* Commented as it is obsolete now.
+ Date - 21st Feb, 2023.
+ import logo from './logo.svg';
+ import './App.css';*/
 import axios from 'axios';
 import { Header } from 'semantic-ui-react';
 import List from 'semantic-ui-react/dist/commonjs/elements/List';

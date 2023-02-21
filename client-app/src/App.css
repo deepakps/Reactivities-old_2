@@ -1,6 +1,10 @@
 /* This is the css file which gets supplied to react application.
 Date - 10th Feb, 2023. */
 
+
+/* This css file is no longer needed. app>layout>styles.css will be used for same purpose.
+Date - 21th Feb, 2023. */
+
 .App {
     text-align: center;
 }
