@@ -8,7 +8,9 @@ export default function NavBar() {
         <Menu inverted fixed="top">
             <Container>
                 <Menu.Item header>
-                    <img src="/assets/logo.png" alt="logo" />
+                    {/* Specifying just number indicates 'px'.
+                    Date - 22nd Feb, 2023. */}
+                    <img src="/assets/logo.png" alt="logo" style={{ marginRight: 10 }} />
                 </Menu.Item>
                 <Menu.Item name="Activities" />
                 <Menu.Item>

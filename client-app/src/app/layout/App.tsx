@@ -1,12 +1,12 @@
 // This is App which gets rendered inside src>index.tsx.
 // Date - 10th Feb, 2023.
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 /* Commented as it is obsolete now.
  Date - 21st Feb, 2023.
  import logo from './logo.svg';
  import './App.css';*/
 import axios from 'axios';
-import { Header } from 'semantic-ui-react';
+import { Container, Header } from 'semantic-ui-react';
 import List from 'semantic-ui-react/dist/commonjs/elements/List';
 import { Activity } from '../models/activity';
 import NavBar from './NavBar';
@@ -30,7 +30,11 @@ function App() {
   }, []);
 
   return (
-    <div>
+    // 'Div' is replaced with 'Fragment'. Another reason is that we are not allowed to put two separate elements of same level inside react component.
+    // Therefore, we need to have one parent Element i.e. 'Div' or 'Fragment'. Putting empty <> </> also indicate <Fragment> </Fragment>.
+    // Date - 22nd Feb, 2023.
+    <>
+      {/* <div> */}
       {/* Commented as part of Semantic UI changes.
       Date - 22nd Feb, 2023. */}
       {/* <Header as='h2' icon='users' content='Reactivities' /> */}
@@ -43,14 +47,18 @@ function App() {
         ))} */}
 
       <NavBar />
-      <List>
-        {activities.map(activity => (
-          <List.Item key={activity.id}>
-            {activity.title}
-          </List.Item>
-        ))}
-      </List>
-    </div>
+
+      <Container style={{ marginTop: "7em" }}>
+        <List>
+          {activities.map(activity => (
+            <List.Item key={activity.id}>
+              {activity.title}
+            </List.Item>
+          ))}
+        </List>
+      </Container>
+      {/* </div> */}
+    </>
   );
 }
 
