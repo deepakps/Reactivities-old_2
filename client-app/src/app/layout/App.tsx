@@ -10,6 +10,7 @@ import { Container, Header } from 'semantic-ui-react';
 import List from 'semantic-ui-react/dist/commonjs/elements/List';
 import { Activity } from '../models/activity';
 import NavBar from './NavBar';
+import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
 // Commented demo code.
 // Date - 11th Feb, 2023.
 // import { ducks } from './demo';
@@ -49,13 +50,9 @@ function App() {
       <NavBar />
 
       <Container style={{ marginTop: "7em" }}>
-        <List>
-          {activities.map(activity => (
-            <List.Item key={activity.id}>
-              {activity.title}
-            </List.Item>
-          ))}
-        </List>
+        {/* List & List.Item code shifted to ActivityDashboard.tsx.
+            Date - 22nd Feb, 2023. */}
+        <ActivityDashboard activities={activities} />
       </Container>
       {/* </div> */}
     </>
