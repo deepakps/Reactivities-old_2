@@ -2,6 +2,8 @@ import React from "react";
 import { Button, Item, Label, Segment } from "semantic-ui-react";
 import { Activity } from "../../../app/models/activity";
 
+// Date - 25th Feb, 2023.
+
 interface Props {
     activities: Activity[];
 }
