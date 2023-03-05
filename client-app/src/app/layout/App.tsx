@@ -18,6 +18,7 @@ import ActivityDashboard from '../../features/activities/dashboard/ActivityDashb
 
 function App() {
   const [activities, setActivities] = useState<Activity[]>([]);
+  const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined);
 
   // When we make use of useEffect, we need to give some dependencies. Otherwise it could fire infinite times.
   // Therefore, adding second parameter as array in useEffect which will lead to execute only one time.
@@ -29,6 +30,16 @@ function App() {
         setActivities(respose.data);
       });
   }, []);
+
+  // Date - 5th Mar, 2023.
+  function handleSelectActivity(id: string) {
+    setSelectedActivity(activities.find(x => x.id === id));
+  }
+
+  // Date - 5th Mar, 2023.
+  function handleCancelSelectActivity() {
+    setSelectedActivity(undefined);
+  }
 
   return (
     // 'Div' is replaced with 'Fragment'. Another reason is that we are not allowed to put two separate elements of same level inside react component.
@@ -43,7 +54,7 @@ function App() {
       {/* Demo code. */}
       {/* {ducks.map(duck => (
           // When we are looping over in react then you will need to assign key for opening element.
-          // Date - 11th Feb, 2023. 
+          // Date - 11th Feb, 2023.
           <DuckItem duck={duck} key={duck.name} />
         ))} */}
 
@@ -52,7 +63,11 @@ function App() {
       <Container style={{ marginTop: "7em" }}>
         {/* List & List.Item code shifted to ActivityDashboard.tsx.
             Date - 22nd Feb, 2023. */}
-        <ActivityDashboard activities={activities} />
+        <ActivityDashboard
+          activities={activities}
+          selectedActivity={selectedActivity}
+          selectActivity={handleSelectActivity}
+          cancelSelectActivity={handleCancelSelectActivity} />
       </Container>
       {/* </div> */}
     </>
