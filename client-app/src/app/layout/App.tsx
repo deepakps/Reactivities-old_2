@@ -19,6 +19,7 @@ import ActivityDashboard from '../../features/activities/dashboard/ActivityDashb
 function App() {
   const [activities, setActivities] = useState<Activity[]>([]);
   const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined);
+  const [editMode, setEditMode] = useState(false);
 
   // When we make use of useEffect, we need to give some dependencies. Otherwise it could fire infinite times.
   // Therefore, adding second parameter as array in useEffect which will lead to execute only one time.
@@ -41,6 +42,17 @@ function App() {
     setSelectedActivity(undefined);
   }
 
+  // Date - 5th Mar, 2023.
+  function handleFormOpen(id?: string) {
+    id ? handleSelectActivity(id) : handleCancelSelectActivity();
+    setEditMode(true);
+  }
+
+  // Date - 5th Mar, 2023.
+  function handleFormClose() {
+    setEditMode(false);
+  }
+
   return (
     // 'Div' is replaced with 'Fragment'. Another reason is that we are not allowed to put two separate elements of same level inside react component.
     // Therefore, we need to have one parent Element i.e. 'Div' or 'Fragment'. Putting empty <> </> also indicate <Fragment> </Fragment>.
@@ -58,7 +70,7 @@ function App() {
           <DuckItem duck={duck} key={duck.name} />
         ))} */}
 
-      <NavBar />
+      <NavBar openForm={handleFormOpen} />
 
       <Container style={{ marginTop: "7em" }}>
         {/* List & List.Item code shifted to ActivityDashboard.tsx.
@@ -67,7 +79,10 @@ function App() {
           activities={activities}
           selectedActivity={selectedActivity}
           selectActivity={handleSelectActivity}
-          cancelSelectActivity={handleCancelSelectActivity} />
+          cancelSelectActivity={handleCancelSelectActivity}
+          editMode={editMode}
+          openForm={handleFormOpen}
+          closeForm={handleFormClose} />
       </Container>
       {/* </div> */}
     </>
