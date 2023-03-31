@@ -6,8 +6,7 @@ import React, { Fragment, useEffect, useState } from 'react';
  import logo from './logo.svg';
  import './App.css';*/
 import axios from 'axios';
-import { Container, Header } from 'semantic-ui-react';
-import List from 'semantic-ui-react/dist/commonjs/elements/List';
+import { Container } from 'semantic-ui-react';
 import { Activity } from '../models/activity';
 import NavBar from './NavBar';
 import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
@@ -53,6 +52,16 @@ function App() {
     setEditMode(false);
   }
 
+  // Date - 31st Mar, 2023.
+  function handleCreateOrEditActivity(activity: Activity) {
+    activity.id
+      ? setActivities([...activities.filter(a => a.id !== activity.id), activity])
+      : setActivities([...activities, activity]);
+
+    setEditMode(false);
+    setSelectedActivity(activity);
+  }
+
   return (
     // 'Div' is replaced with 'Fragment'. Another reason is that we are not allowed to put two separate elements of same level inside react component.
     // Therefore, we need to have one parent Element i.e. 'Div' or 'Fragment'. Putting empty <> </> also indicate <Fragment> </Fragment>.
@@ -82,7 +91,8 @@ function App() {
           cancelSelectActivity={handleCancelSelectActivity}
           editMode={editMode}
           openForm={handleFormOpen}
-          closeForm={handleFormClose} />
+          closeForm={handleFormClose}
+          createOrEdit={handleCreateOrEditActivity} />
       </Container>
       {/* </div> */}
     </>

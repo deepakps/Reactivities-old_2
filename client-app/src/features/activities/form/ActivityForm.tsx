@@ -7,9 +7,10 @@ import { Activity } from "../../../app/models/activity";
 interface Props {
     closeForm: () => void;
     activity: Activity | undefined;
+    createOrEdit: (activity: Activity) => void;
 }
 
-export default function ActivityForm({ closeForm, activity: selectedActivity }: Props) {
+export default function ActivityForm({ closeForm, activity: selectedActivity, createOrEdit }: Props) {
 
     const initialState = selectedActivity ?? {
         id: '',
@@ -24,7 +25,7 @@ export default function ActivityForm({ closeForm, activity: selectedActivity }: 
     const [activity, setActivity] = useState(initialState);
 
     function handleSubmit() {
-        console.log(activity);
+        createOrEdit(activity);
     }
 
     // After simply declaring value property we are broking typing into the input field. That is the reason react makes the field readonly 
