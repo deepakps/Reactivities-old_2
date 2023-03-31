@@ -1,6 +1,6 @@
 // This is App which gets rendered inside src>index.tsx.
 // Date - 10th Feb, 2023.
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 /* Commented as it is obsolete now.
  Date - 21st Feb, 2023.
  import logo from './logo.svg';
@@ -14,6 +14,9 @@ import ActivityDashboard from '../../features/activities/dashboard/ActivityDashb
 // Date - 11th Feb, 2023.
 // import { ducks } from './demo';
 // import DuckItem from './DuckItem';
+
+// Date - 31st Mar, 2023.
+import { v4 as uuid } from 'uuid';
 
 function App() {
   const [activities, setActivities] = useState<Activity[]>([]);
@@ -56,7 +59,7 @@ function App() {
   function handleCreateOrEditActivity(activity: Activity) {
     activity.id
       ? setActivities([...activities.filter(a => a.id !== activity.id), activity])
-      : setActivities([...activities, activity]);
+      : setActivities([...activities, { ...activity, id: uuid() }]);
 
     setEditMode(false);
     setSelectedActivity(activity);
