@@ -65,6 +65,10 @@ function App() {
     setSelectedActivity(activity);
   }
 
+  // Date - 31st Mar, 2023.
+  function handleDeleteActivity(id: string) {
+    setActivities([...activities.filter(a => a.id !== id)]);
+  }
   return (
     // 'Div' is replaced with 'Fragment'. Another reason is that we are not allowed to put two separate elements of same level inside react component.
     // Therefore, we need to have one parent Element i.e. 'Div' or 'Fragment'. Putting empty <> </> also indicate <Fragment> </Fragment>.
@@ -95,7 +99,8 @@ function App() {
           editMode={editMode}
           openForm={handleFormOpen}
           closeForm={handleFormClose}
-          createOrEdit={handleCreateOrEditActivity} />
+          createOrEdit={handleCreateOrEditActivity}
+          deleteActivity={handleDeleteActivity} />
       </Container>
       {/* </div> */}
     </>
