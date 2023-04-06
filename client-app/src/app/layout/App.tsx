@@ -18,11 +18,13 @@ import ActivityDashboard from '../../features/activities/dashboard/ActivityDashb
 // Date - 31st Mar, 2023.
 import { v4 as uuid } from 'uuid';
 import agent from '../api/agent';
+import LoadingComponent from './LoadingComponent';
 
 function App() {
   const [activities, setActivities] = useState<Activity[]>([]);
   const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined);
   const [editMode, setEditMode] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // When we make use of useEffect, we need to give some dependencies. Otherwise it could fire infinite times.
   // Therefore, adding second parameter as array in useEffect which will lead to execute only one time.
@@ -42,6 +44,7 @@ function App() {
           activities.push(activity);
         });
         setActivities(activities);
+        setLoading(false);
       });
   }, []);
 
@@ -80,6 +83,9 @@ function App() {
   function handleDeleteActivity(id: string) {
     setActivities([...activities.filter(a => a.id !== id)]);
   }
+
+  if (loading) return <LoadingComponent content='Loading app' />
+
   return (
     // 'Div' is replaced with 'Fragment'. Another reason is that we are not allowed to put two separate elements of same level inside react component.
     // Therefore, we need to have one parent Element i.e. 'Div' or 'Fragment'. Putting empty <> </> also indicate <Fragment> </Fragment>.
