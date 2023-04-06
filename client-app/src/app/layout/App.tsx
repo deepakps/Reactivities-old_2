@@ -25,6 +25,7 @@ function App() {
   const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined);
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
 
   // When we make use of useEffect, we need to give some dependencies. Otherwise it could fire infinite times.
   // Therefore, adding second parameter as array in useEffect which will lead to execute only one time.
@@ -71,12 +72,23 @@ function App() {
 
   // Date - 31st Mar, 2023.
   function handleCreateOrEditActivity(activity: Activity) {
-    activity.id
-      ? setActivities([...activities.filter(a => a.id !== activity.id), activity])
-      : setActivities([...activities, { ...activity, id: uuid() }]);
-
-    setEditMode(false);
-    setSelectedActivity(activity);
+    setSubmitting(true);
+    if (activity.id) {
+      agent.Activities.update(activity).then(() => {
+        setActivities([...activities.filter(a => a.id !== activity.id), activity]);
+        setSelectedActivity(activity);
+        setEditMode(false);
+        setSubmitting(false);
+      });
+    } else {
+      activity.id = uuid();
+      agent.Activities.create(activity).then(() => {
+        setActivities([...activities, activity]);
+        setSelectedActivity(activity);
+        setEditMode(false);
+        setSubmitting(false);
+      });
+    }
   }
 
   // Date - 31st Mar, 2023.
@@ -84,7 +96,7 @@ function App() {
     setActivities([...activities.filter(a => a.id !== id)]);
   }
 
-  if (loading) return <LoadingComponent content='Loading app' />
+  if (loading) return <LoadingComponent content='Loading app...' />
 
   return (
     // 'Div' is replaced with 'Fragment'. Another reason is that we are not allowed to put two separate elements of same level inside react component.
@@ -117,7 +129,8 @@ function App() {
           openForm={handleFormOpen}
           closeForm={handleFormClose}
           createOrEdit={handleCreateOrEditActivity}
-          deleteActivity={handleDeleteActivity} />
+          deleteActivity={handleDeleteActivity}
+          submitting={submitting} />
       </Container>
       {/* </div> */}
     </>
