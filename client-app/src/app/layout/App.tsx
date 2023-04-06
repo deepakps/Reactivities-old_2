@@ -36,7 +36,12 @@ function App() {
     // Date - 06th Apr, 2023.
     agent.Activities.list()
       .then(respose => {
-        setActivities(respose);
+        let activities: Activity[] = [];
+        respose.forEach(activity => {
+          activity.date = activity.date.split('T')[0];
+          activities.push(activity);
+        });
+        setActivities(activities);
       });
   }, []);
 
