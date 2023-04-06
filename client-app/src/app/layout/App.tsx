@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
  Date - 21st Feb, 2023.
  import logo from './logo.svg';
  import './App.css';*/
-import axios from 'axios';
+// import axios from 'axios';
 import { Container } from 'semantic-ui-react';
 import { Activity } from '../models/activity';
 import NavBar from './NavBar';
@@ -17,6 +17,7 @@ import ActivityDashboard from '../../features/activities/dashboard/ActivityDashb
 
 // Date - 31st Mar, 2023.
 import { v4 as uuid } from 'uuid';
+import agent from '../api/agent';
 
 function App() {
   const [activities, setActivities] = useState<Activity[]>([]);
@@ -27,10 +28,15 @@ function App() {
   // Therefore, adding second parameter as array in useEffect which will lead to execute only one time.
   // Date - 11th Feb, 2023.
   useEffect(() => {
-    axios.get<Activity[]>('http://localhost:5000/api/activities')
+    // axios.get<Activity[]>('http://localhost:5000/api/activities')
+    //   .then(respose => {
+    //     setActivities(respose.data);
+    //   });
+    // Implemented with Axios setup.
+    // Date - 06th Apr, 2023.
+    agent.Activities.list()
       .then(respose => {
-        // console.log(respose);
-        setActivities(respose.data);
+        setActivities(respose);
       });
   }, []);
 
