@@ -35,17 +35,26 @@ export default class ActivityStore {
     }
 
     loadActivities = async () => {
-        this.loadingInitial = true;
+        this.setLoadingInitial(true);
         try {
             const activities = await agent.Activities.list();
+
+
             activities.forEach(activity => {
                 activity.date = activity.date.split('T')[0];
                 this.activities.push(activity);
             })
-            this.loadingInitial = false;
+            this.setLoadingInitial(false);
         } catch (error) {
             console.log(error);
-            this.loadingInitial = false;
+            this.setLoadingInitial(false);
         }
+    }
+
+    // Any steps after 'await' aren't in the same tick, so they require action wrapping.
+    // Here, we can leverae 'runInAction'. This means every update has to be inside a action.
+    // Date - 25th Apr, 2023.
+    setLoadingInitial = (state: boolean) => {
+        this.loadingInitial = state;
     }
 }
