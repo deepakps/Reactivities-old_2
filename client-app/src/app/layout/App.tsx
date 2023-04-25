@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
  import logo from './logo.svg';
  import './App.css';*/
 // import axios from 'axios';
-import { Button, Container } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 import { Activity } from '../models/activity';
 import NavBar from './NavBar';
 import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
@@ -25,33 +25,29 @@ import { observer } from 'mobx-react-lite';
 function App() {
   const { activityStore } = useStore();
 
+  //not required states removed after implementing store.
+  // Date - 25th Apr, 2023.
   const [activities, setActivities] = useState<Activity[]>([]);
   const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined);
   const [editMode, setEditMode] = useState(false);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
   // When we make use of useEffect, we need to give some dependencies. Otherwise it could fire infinite times.
   // Therefore, adding second parameter as array in useEffect which will lead to execute only one time.
   // Date - 11th Feb, 2023.
   useEffect(() => {
+    // Implemented with Axios setup.
+    // Date - 06th Apr, 2023.
     // axios.get<Activity[]>('http://localhost:5000/api/activities')
     //   .then(respose => {
     //     setActivities(respose.data);
     //   });
-    // Implemented with Axios setup.
-    // Date - 06th Apr, 2023.
-    agent.Activities.list()
-      .then(respose => {
-        let activities: Activity[] = [];
-        respose.forEach(activity => {
-          activity.date = activity.date.split('T')[0];
-          activities.push(activity);
-        });
-        setActivities(activities);
-        setLoading(false);
-      });
-  }, []);
+
+    /* Code refactored & moved to activityStore.ts
+        Date - 25th Apr, 2023. */
+    activityStore.loadActivities();
+  }, [activityStore]);
 
   // Date - 5th Mar, 2023.
   function handleSelectActivity(id: string) {
@@ -104,7 +100,7 @@ function App() {
     });
   }
 
-  if (loading) return <LoadingComponent content='Loading app...' />
+  if (activityStore.loadingInitial) return <LoadingComponent content='Loading app...' />
 
   return (
     // 'Div' is replaced with 'Fragment'. Another reason is that we are not allowed to put two separate elements of same level inside react component.
@@ -128,10 +124,8 @@ function App() {
       <Container style={{ marginTop: "7em" }}>
         {/* List & List.Item code shifted to ActivityDashboard.tsx.
             Date - 22nd Feb, 2023. */}
-        <h2>{activityStore.title}</h2>
-        <Button content='Add Exclamation!' positive onClick={activityStore.setTitle} />
         <ActivityDashboard
-          activities={activities}
+          activities={activityStore.activities}
           selectedActivity={selectedActivity}
           selectActivity={handleSelectActivity}
           cancelSelectActivity={handleCancelSelectActivity}
