@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
  import logo from './logo.svg';
  import './App.css';*/
 // import axios from 'axios';
-import { Container } from 'semantic-ui-react';
+import { Button, Container } from 'semantic-ui-react';
 import { Activity } from '../models/activity';
 import NavBar from './NavBar';
 import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
@@ -20,6 +20,7 @@ import { v4 as uuid } from 'uuid';
 import agent from '../api/agent';
 import LoadingComponent from './LoadingComponent';
 import { useStore } from '../stores/store';
+import { observer } from 'mobx-react-lite';
 
 function App() {
   const { activityStore } = useStore();
@@ -128,6 +129,7 @@ function App() {
         {/* List & List.Item code shifted to ActivityDashboard.tsx.
             Date - 22nd Feb, 2023. */}
         <h2>{activityStore.title}</h2>
+        <Button content='Add Exclamation!' positive onClick={activityStore.setTitle} />
         <ActivityDashboard
           activities={activities}
           selectedActivity={selectedActivity}
@@ -145,4 +147,4 @@ function App() {
   );
 }
 
-export default App;
+export default observer(App);
