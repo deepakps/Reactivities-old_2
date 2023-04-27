@@ -25,7 +25,7 @@ export default class ActivityStore {
     }*/
 
     activities: Activity[] = [];
-    selectedActivity: Activity | null = null;
+    selectedActivity: Activity | undefined = undefined;
     editMode = false;
     loading = false;
     loadingInitial = false;
@@ -56,5 +56,26 @@ export default class ActivityStore {
     // Date - 25th Apr, 2023.
     setLoadingInitial = (state: boolean) => {
         this.loadingInitial = state;
+    }
+
+    // Date - 26th Apr, 2023.
+    selectActivity = (id: string) => {
+        this.selectedActivity = this.activities.find(a => a.id === id);
+    }
+
+    // Date - 26th Apr, 2023.
+    cancelSelectedActivity = () => {
+        this.selectedActivity = undefined;
+    }
+
+    // Date - 26th Apr, 2023.
+    openForm = (id?: string) => {
+        id ? this.selectActivity(id) : this.cancelSelectedActivity();
+        this.editMode = true;
+    }
+
+    // Date - 26th Apr, 2023.
+    closeForm = () => {
+        this.editMode = false;
     }
 }

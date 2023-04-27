@@ -49,6 +49,7 @@ function App() {
     activityStore.loadActivities();
   }, [activityStore]);
 
+  /* Code refactored & shifted to activityStore.ts. Date - 26th Apr, 2023.
   // Date - 5th Mar, 2023.
   function handleSelectActivity(id: string) {
     setSelectedActivity(activities.find(x => x.id === id));
@@ -68,7 +69,7 @@ function App() {
   // Date - 5th Mar, 2023.
   function handleFormClose() {
     setEditMode(false);
-  }
+  }*/
 
   // Date - 31st Mar, 2023.
   function handleCreateOrEditActivity(activity: Activity) {
@@ -119,19 +120,15 @@ function App() {
           <DuckItem duck={duck} key={duck.name} />
         ))} */}
 
-      <NavBar openForm={handleFormOpen} />
+      <NavBar />
 
       <Container style={{ marginTop: "7em" }}>
         {/* List & List.Item code shifted to ActivityDashboard.tsx.
             Date - 22nd Feb, 2023. */}
         <ActivityDashboard
           activities={activityStore.activities}
-          selectedActivity={selectedActivity}
-          selectActivity={handleSelectActivity}
-          cancelSelectActivity={handleCancelSelectActivity}
-          editMode={editMode}
-          openForm={handleFormOpen}
-          closeForm={handleFormClose}
+          /*selectedActivity={selectedActivity}
+          editMode={editMode}*/
           createOrEdit={handleCreateOrEditActivity}
           deleteActivity={handleDeleteActivity}
           submitting={submitting} />
