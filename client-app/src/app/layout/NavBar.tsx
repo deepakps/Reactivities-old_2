@@ -4,12 +4,8 @@ import { useStore } from "../stores/store";
 
 // Date - 22nd Feb, 2023.
 
-/*Code refactored & shifted to activityStore.ts. Date - 26th Apr, 2023.
-interface Props {
-    openForm: () => void;
-}*/
-
-export default function NavBar(/*{ openForm }: Props*/) {
+/*Code refactored & shifted to activityStore.ts. Date - 26th Apr, 2023.*/
+export default function NavBar() {
     const { activityStore } = useStore();
 
     return (

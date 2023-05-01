@@ -1,26 +1,12 @@
 import React, { SyntheticEvent, useState } from "react";
 import { Button, Item, Label, Segment } from "semantic-ui-react";
-// import { Activity } from "../../../app/models/activity";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 
 // Date - 25th Feb, 2023.
-
-/* Code refactored & shifted to activityStore.ts. Date - 1st May, 2023.
-interface Props {
-    activities: Activity[];
-    Code refactored & shifted to activityStore.ts. Date - 26th Apr, 2023.
-    selectActivity: (id: string) => void;
-    deleteActivity: (id: string) => void;
-    submitting: boolean;
-}*/
-
 export default observer(function ActivityList(/*{ activities, selectActivity, deleteActivity, submitting }: Props*/) {
     const { activityStore } = useStore();
     const { deleteActivity, activitiesByDate, loading } = activityStore;
-
-    // setTarget state added.
-    // Date - 24th Apr, 2023.
     const [target, setTarget] = useState('');
 
     // All the click events come from react Synthetic event

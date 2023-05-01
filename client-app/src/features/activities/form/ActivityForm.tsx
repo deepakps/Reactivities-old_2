@@ -1,20 +1,10 @@
 import React, { ChangeEvent, useState } from "react";
 import { Button, Form, Segment } from "semantic-ui-react";
-// import { Activity } from "../../../app/models/activity";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 
 // Date - 26th Feb, 2023.
-
-/* Code refactored & shifted to activityStore.ts. Date - 30th Apr, 2023.
-interface Props {
-    closeForm: () => void;
-    activity: Activity | undefined;
-    createOrEdit: (activity: Activity) => void;
-    submitting: boolean
-}*/
-
-export default observer(function ActivityForm(/*{ closeForm, activity: selectedActivity, createOrEdit, submitting }: Props*/) {
+export default observer(function ActivityForm() {
     const { activityStore } = useStore();
     const { selectedActivity, closeForm, createActivity, updateActivity, loading } = activityStore;
 
@@ -31,13 +21,12 @@ export default observer(function ActivityForm(/*{ closeForm, activity: selectedA
     const [activity, setActivity] = useState(initialState);
 
     function handleSubmit() {
-        // createOrEdit(activity);
-        // Date - 30th Apr, 2023.
         activity.id ? updateActivity(activity) : createActivity(activity);
     }
 
-    // After simply declaring value property we are broking typing into the input field. That is the reason react makes the field readonly 
-    // as react unable to track changes. That is the reason we handle onChange inside the input field.
+    // After simply declaring value property, we are braking typing into the input field. 
+    // That is the reason react makes the field readonly as react unable to track changes. 
+    // That is the reason we handle onChange inside the input field.
     // Date - 06th Mar, 2023.
     function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const { name, value } = event.target;

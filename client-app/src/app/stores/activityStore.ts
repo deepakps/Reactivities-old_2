@@ -8,23 +8,6 @@ import { v4 as uuid } from 'uuid';
 
 // Date - 24th Apr, 2023.
 export default class ActivityStore {
-    /*title = 'Hello from MobX';
-
-    constructor() {
-        // makeObservable(this, {
-        //     title: observable,
-        //     // setTitle is making the use of this keyword, we need to bind this to the class.
-        //     // Therefore, make use of action.bound to automatically bound the function to the class.
-        //     // Alternate option is make setTitle as arrow funtion. Then, mention only as action.
-        //     // Date - 25th Apr, 2023.
-        //     setTitle: action
-        // })
-        makeAutoObservable(this)
-    }
-    setTitle = () => {
-        this.title = this.title + '!';
-    }*/
-
     activities: Activity[] = [];
     activityRegistry = new Map<string, Activity>();
     selectedActivity: Activity | undefined = undefined;
@@ -52,8 +35,6 @@ export default class ActivityStore {
 
             activities.forEach(activity => {
                 activity.date = activity.date.split('T')[0];
-                // Repalcement with Map object. Date - 01st May, 2023.
-                // this.activities.push(activity);
                 this.activityRegistry.set(activity.id, activity);
             })
             this.setLoadingInitial(false);
@@ -72,8 +53,6 @@ export default class ActivityStore {
 
     // Date - 26th Apr, 2023.
     selectActivity = (id: string) => {
-        // Repalcement with Map object. Date - 01st May, 2023.
-        // this.selectedActivity = this.activities.find(a => a.id === id);
         this.selectedActivity = this.activityRegistry.get(id);
     }
 
@@ -101,8 +80,6 @@ export default class ActivityStore {
         try {
             await agent.Activities.create(activity);
             runInAction(() => {
-                // Repalcement with Map object. Date - 01st May, 2023.
-                // this.activities.push(activity);
                 this.activityRegistry.set(activity.id, activity);
                 this.selectedActivity = activity;
                 this.editMode = false;
@@ -124,8 +101,6 @@ export default class ActivityStore {
         try {
             await agent.Activities.update(activity);
             runInAction(() => {
-                // Repalcement with Map object. Date - 01st May, 2023.
-                // this.activities = [...this.activities.filter(a => a.id !== activity.id), activity];
                 this.activityRegistry.set(activity.id, activity);
                 this.selectedActivity = activity;
                 this.editMode = false;
@@ -146,8 +121,6 @@ export default class ActivityStore {
         try {
             await agent.Activities.delete(id);
             runInAction(() => {
-                // Repalcement with Map object. Date - 01st May, 2023.
-                // this.activities = [...this.activities.filter(a => a.id !== id)];
                 this.activityRegistry.delete(id);
                 this.loading = false;
             })
