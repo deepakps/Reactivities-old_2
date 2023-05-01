@@ -1,9 +1,10 @@
 // Activity store for MobX.
 // Date - 24th Apr, 2023.
 
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { Activity } from "../models/activity";
 import agent from "../api/agent";
+import { v4 as uuid } from 'uuid';
 
 // Date - 24th Apr, 2023.
 export default class ActivityStore {
@@ -38,7 +39,6 @@ export default class ActivityStore {
         this.setLoadingInitial(true);
         try {
             const activities = await agent.Activities.list();
-
 
             activities.forEach(activity => {
                 activity.date = activity.date.split('T')[0];
@@ -77,5 +77,48 @@ export default class ActivityStore {
     // Date - 26th Apr, 2023.
     closeForm = () => {
         this.editMode = false;
+    }
+
+    // Date - 30th Apr, 2023.
+    createActivity = async (activity: Activity) => {
+        this.loading = true;
+        activity.id = uuid();
+
+        try {
+            await agent.Activities.create(activity);
+            runInAction(() => {
+                this.activities.push(activity);
+                this.selectedActivity = activity;
+                this.editMode = false;
+                this.loading = false;
+            })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.editMode = false;
+                this.loading = false;
+            });
+        }
+    }
+
+    // Date - 30th Apr, 2023.
+    updateActivity = async (activity: Activity) => {
+        this.loading = true;
+
+        try {
+            await agent.Activities.update(activity);
+            runInAction(() => {
+                this.activities = [...this.activities.filter(a => a.id !== activity.id), activity];
+                this.selectedActivity = activity;
+                this.editMode = false;
+                this.loading = false;
+            });
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.editMode = false;
+                this.loading = false;
+            })
+        }
     }
 }

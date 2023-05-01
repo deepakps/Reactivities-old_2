@@ -17,15 +17,15 @@ interface Props {
     cancelSelectActivity: () => void;
     editMode: boolean;
     openForm: (id: string) => void;
-    closeForm: () => void;*/
-    createOrEdit: (activity: Activity) => void;
+    closeForm: () => void;
+    createOrEdit: (activity: Activity) => void;*/
     deleteActivity: (id: string) => void;
     submitting: boolean;
 }
 
 export default observer(function ActivityDashboard({ activities, /*selectedActivity,
-    selectActivity, cancelSelectActivity, editMode, openForm, closeForm,*/
-    createOrEdit, deleteActivity, submitting }: Props) {
+    selectActivity, cancelSelectActivity, editMode, openForm, closeForm,
+    createOrEdit,*/ deleteActivity, submitting }: Props) {
     const { activityStore } = useStore();
     const { selectedActivity, editMode } = activityStore;
 
@@ -44,9 +44,7 @@ export default observer(function ActivityDashboard({ activities, /*selectedActiv
                 {selectedActivity && !editMode &&
                     <ActivityDetails />}
                 {editMode &&
-                    <ActivityForm
-                        createOrEdit={createOrEdit}
-                        submitting={submitting} />}
+                    <ActivityForm />}
             </Grid.Column>
         </Grid>
     )

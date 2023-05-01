@@ -16,7 +16,7 @@ import ActivityDashboard from '../../features/activities/dashboard/ActivityDashb
 // import DuckItem from './DuckItem';
 
 // Date - 31st Mar, 2023.
-import { v4 as uuid } from 'uuid';
+// import { v4 as uuid } from 'uuid';
 import agent from '../api/agent';
 import LoadingComponent from './LoadingComponent';
 import { useStore } from '../stores/store';
@@ -28,9 +28,9 @@ function App() {
   //not required states removed after implementing store.
   // Date - 25th Apr, 2023.
   const [activities, setActivities] = useState<Activity[]>([]);
-  const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined);
+  /*const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined);
   const [editMode, setEditMode] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);*/
   const [submitting, setSubmitting] = useState(false);
 
   // When we make use of useEffect, we need to give some dependencies. Otherwise it could fire infinite times.
@@ -72,25 +72,26 @@ function App() {
   }*/
 
   // Date - 31st Mar, 2023.
-  function handleCreateOrEditActivity(activity: Activity) {
-    setSubmitting(true);
-    if (activity.id) {
-      agent.Activities.update(activity).then(() => {
-        setActivities([...activities.filter(a => a.id !== activity.id), activity]);
-        setSelectedActivity(activity);
-        setEditMode(false);
-        setSubmitting(false);
-      });
-    } else {
-      activity.id = uuid();
-      agent.Activities.create(activity).then(() => {
-        setActivities([...activities, activity]);
-        setSelectedActivity(activity);
-        setEditMode(false);
-        setSubmitting(false);
-      });
-    }
-  }
+  /* Code refactored & shifted to activityStore.ts. Date - 26th Apr, 2023.
+ function handleCreateOrEditActivity(activity: Activity) {
+   setSubmitting(true);
+   if (activity.id) {
+     agent.Activities.update(activity).then(() => {
+       setActivities([...activities.filter(a => a.id !== activity.id), activity]);
+       setSelectedActivity(activity);
+       setEditMode(false);
+       setSubmitting(false);
+     });
+   } else {
+     activity.id = uuid();
+     agent.Activities.create(activity).then(() => {
+       setActivities([...activities, activity]);
+       setSelectedActivity(activity);
+       setEditMode(false);
+       setSubmitting(false);
+     });
+   }
+ }*/
 
   // Date - 31st Mar, 2023.
   function handleDeleteActivity(id: string) {
@@ -128,8 +129,8 @@ function App() {
         <ActivityDashboard
           activities={activityStore.activities}
           /*selectedActivity={selectedActivity}
-          editMode={editMode}*/
-          createOrEdit={handleCreateOrEditActivity}
+          editMode={editMode}
+          createOrEdit={handleCreateOrEditActivity}*/
           deleteActivity={handleDeleteActivity}
           submitting={submitting} />
       </Container>
