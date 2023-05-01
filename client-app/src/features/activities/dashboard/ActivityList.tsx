@@ -17,7 +17,7 @@ interface Props {
 
 export default observer(function ActivityList(/*{ activities, selectActivity, deleteActivity, submitting }: Props*/) {
     const { activityStore } = useStore();
-    const { deleteActivity, activities, loading } = activityStore;
+    const { deleteActivity, activitiesByDate, loading } = activityStore;
 
     // setTarget state added.
     // Date - 24th Apr, 2023.
@@ -33,7 +33,7 @@ export default observer(function ActivityList(/*{ activities, selectActivity, de
     return (
         <Segment>
             <Item.Group divided>
-                {activities.map(activity => (
+                {activitiesByDate.map(activity => (
                     <Item key={activity.id}>
                         <Item.Content>
                             <Item.Header as='a'>{activity.title}</Item.Header>
