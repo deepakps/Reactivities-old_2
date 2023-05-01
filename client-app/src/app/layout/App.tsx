@@ -1,13 +1,13 @@
 // This is App which gets rendered inside src>index.tsx.
 // Date - 10th Feb, 2023.
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 /* Commented as it is obsolete now.
  Date - 21st Feb, 2023.
  import logo from './logo.svg';
  import './App.css';*/
 // import axios from 'axios';
 import { Container } from 'semantic-ui-react';
-import { Activity } from '../models/activity';
+// import { Activity } from '../models/activity';
 import NavBar from './NavBar';
 import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
 // Commented demo code.
@@ -17,7 +17,7 @@ import ActivityDashboard from '../../features/activities/dashboard/ActivityDashb
 
 // Date - 31st Mar, 2023.
 // import { v4 as uuid } from 'uuid';
-import agent from '../api/agent';
+// import agent from '../api/agent';
 import LoadingComponent from './LoadingComponent';
 import { useStore } from '../stores/store';
 import { observer } from 'mobx-react-lite';
@@ -27,11 +27,11 @@ function App() {
 
   //not required states removed after implementing store.
   // Date - 25th Apr, 2023.
-  const [activities, setActivities] = useState<Activity[]>([]);
+  // const [activities, setActivities] = useState<Activity[]>([]);
   /*const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined);
   const [editMode, setEditMode] = useState(false);
-  const [loading, setLoading] = useState(true);*/
-  const [submitting, setSubmitting] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);*/
 
   // When we make use of useEffect, we need to give some dependencies. Otherwise it could fire infinite times.
   // Therefore, adding second parameter as array in useEffect which will lead to execute only one time.
@@ -94,13 +94,15 @@ function App() {
  }*/
 
   // Date - 31st Mar, 2023.
+  /*
+  Code refactored & shifted to activityStore.ts. Date - 01st May, 2023.
   function handleDeleteActivity(id: string) {
     setSubmitting(true);
     agent.Activities.delete(id).then(() => {
       setActivities([...activities.filter(a => a.id !== id)]);
       setSubmitting(false);
     });
-  }
+  }*/
 
   if (activityStore.loadingInitial) return <LoadingComponent content='Loading app...' />
 
@@ -127,12 +129,12 @@ function App() {
         {/* List & List.Item code shifted to ActivityDashboard.tsx.
             Date - 22nd Feb, 2023. */}
         <ActivityDashboard
-          activities={activityStore.activities}
-          /*selectedActivity={selectedActivity}
+          /*activities={activityStore.activities}
+          selectedActivity={selectedActivity}
           editMode={editMode}
-          createOrEdit={handleCreateOrEditActivity}*/
+          createOrEdit={handleCreateOrEditActivity}
           deleteActivity={handleDeleteActivity}
-          submitting={submitting} />
+          submitting={submitting} *//>
       </Container>
       {/* </div> */}
     </>

@@ -1,19 +1,24 @@
 import React, { SyntheticEvent, useState } from "react";
 import { Button, Item, Label, Segment } from "semantic-ui-react";
-import { Activity } from "../../../app/models/activity";
+// import { Activity } from "../../../app/models/activity";
 import { useStore } from "../../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
 // Date - 25th Feb, 2023.
 
+/* Code refactored & shifted to activityStore.ts. Date - 1st May, 2023.
 interface Props {
     activities: Activity[];
-    /* Code refactored & shifted to activityStore.ts. Date - 26th Apr, 2023.
+    Code refactored & shifted to activityStore.ts. Date - 26th Apr, 2023.
     selectActivity: (id: string) => void;
-    deleteActivity: (id: string) => void;*/
+    deleteActivity: (id: string) => void;
     submitting: boolean;
-}
+}*/
 
-export default function ActivityList({ activities, /*selectActivity, deleteActivity,*/ submitting }: Props) {
+export default observer(function ActivityList(/*{ activities, selectActivity, deleteActivity, submitting }: Props*/) {
+    const { activityStore } = useStore();
+    const { deleteActivity, activities, loading } = activityStore;
+
     // setTarget state added.
     // Date - 24th Apr, 2023.
     const [target, setTarget] = useState('');
@@ -22,10 +27,8 @@ export default function ActivityList({ activities, /*selectActivity, deleteActiv
     // Date - 24th Apr, 2023.
     function handleActivityDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
         setTarget(e.currentTarget.name);
-        // deleteActivity(id);
+        deleteActivity(id);
     }
-
-    const { activityStore } = useStore();
 
     return (
         <Segment>
@@ -45,7 +48,7 @@ export default function ActivityList({ activities, /*selectActivity, deleteActiv
                                     name={activity.id}
                                     // Below && statement added is to check whether 
                                     // click event is triggered for the same button or not.
-                                    loading={submitting && target === activity.id}
+                                    loading={loading && target === activity.id}
                                     onClick={(e) => handleActivityDelete(e, activity.id)}
                                     floated="right"
                                     content="Delete"
@@ -58,4 +61,4 @@ export default function ActivityList({ activities, /*selectActivity, deleteActiv
             </Item.Group>
         </Segment>
     )
-}
+})
