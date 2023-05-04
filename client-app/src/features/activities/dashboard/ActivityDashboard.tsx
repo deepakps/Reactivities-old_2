@@ -10,7 +10,6 @@ import LoadingComponent from "../../../app/layout/LoadingComponent";
 // Date - 21st Feb, 2023.
 export default observer(function ActivityDashboard() {
     const { activityStore } = useStore();
-    const { selectedActivity, editMode } = activityStore;
 
     useEffect(() => {
         activityStore.loadActivities();
@@ -24,10 +23,11 @@ export default observer(function ActivityDashboard() {
                 <ActivityList />
             </Grid.Column>
             <Grid.Column width="6">
-                {selectedActivity && !editMode &&
+                {/* {selectedActivity && !editMode &&
                     <ActivityDetails />}
                 {editMode &&
-                    <ActivityForm />}
+                    <ActivityForm />} */}
+                <h2>Activity Filters</h2>
             </Grid.Column>
         </Grid>
     )
