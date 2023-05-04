@@ -18,7 +18,8 @@ function App() {
       <NavBar />
 
       <Container style={{ marginTop: "7em" }}>
-        {/* Commented ActivityDashboard as Implemented Routing.
+        {/* <ActivityDashboard /> */}
+        {/* Commented ActivityDashboard as Routing is implemented.
         Here, Outlet is swapped with requested page. 
         Date - 04th May, 2023. */}
         <Outlet />
