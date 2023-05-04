@@ -1,12 +1,10 @@
 import { Button, Container, Menu } from "semantic-ui-react";
-import { useStore } from "../stores/store";
 import { NavLink } from "react-router-dom";
 
 // Date - 22nd Feb, 2023.
 
 /*Code refactored & shifted to activityStore.ts. Date - 26th Apr, 2023.*/
 export default function NavBar() {
-    const { activityStore } = useStore();
 
     return (
         <Menu inverted fixed="top">
