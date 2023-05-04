@@ -34,14 +34,41 @@ export default class ActivityStore {
             const activities = await agent.Activities.list();
 
             activities.forEach(activity => {
-                activity.date = activity.date.split('T')[0];
-                this.activityRegistry.set(activity.id, activity);
+                this.setActivity(activity);
             })
             this.setLoadingInitial(false);
         } catch (error) {
             console.log(error);
             this.setLoadingInitial(false);
         }
+    }
+
+    // Date - 04th May, 2023.
+    loadActivity = async (id: string) => {
+        let activity = this.getActivity(id);
+        if (activity) this.selectedActivity = activity;
+        else {
+            this.setLoadingInitial(true);
+            try {
+                activity = await agent.Activities.details(id);
+                this.setActivity(activity);
+                this.setLoadingInitial(false);
+            } catch (error) {
+                console.log(error);
+                this.setLoadingInitial(false);
+            }
+        }
+    }
+
+    // Date - 04th May, 2023.
+    private getActivity = (id: string) => {
+        return this.activityRegistry.get(id);
+    }
+
+    // Date - 04th May, 2023.
+    private setActivity = (activity: Activity) => {
+        activity.date = activity.date.split('T')[0];
+        this.activityRegistry.set(activity.id, activity);
     }
 
     // Any steps after 'await' aren't in the same tick, so they require action wrapping.
@@ -51,6 +78,7 @@ export default class ActivityStore {
         this.loadingInitial = state;
     }
 
+    /* Commented because they are no longer needed as Routing is implemented. Date - 04th May, 2023.
     // Date - 26th Apr, 2023.
     selectActivity = (id: string) => {
         this.selectedActivity = this.activityRegistry.get(id);
@@ -70,7 +98,7 @@ export default class ActivityStore {
     // Date - 26th Apr, 2023.
     closeForm = () => {
         this.editMode = false;
-    }
+    }*/
 
     // Date - 30th Apr, 2023.
     createActivity = async (activity: Activity) => {
