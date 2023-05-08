@@ -1,14 +1,20 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { Button, Form, Segment } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import { useParams } from "react-router-dom";
+import { Activity } from "../../../app/models/activity";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
 
 // Date - 26th Feb, 2023.
 export default observer(function ActivityForm() {
     const { activityStore } = useStore();
-    const { selectedActivity, createActivity, updateActivity, loading } = activityStore;
+    const { createActivity, updateActivity,
+        loading, loadActivity, loadingInitial } = activityStore;
 
-    const initialState = selectedActivity ?? {
+    const { id } = useParams();
+
+    const [activity, setActivity] = useState<Activity>({
         id: '',
         title: '',
         category: '',
@@ -16,9 +22,11 @@ export default observer(function ActivityForm() {
         date: '',
         city: '',
         venue: ''
-    }
+    });
 
-    const [activity, setActivity] = useState(initialState);
+    useEffect(() => {
+        if (id) loadActivity(id).then(activity => setActivity(activity!)); //'!' here will stop typescript functinoality. Date - 08th May, 2023.
+    }, [id, loadActivity]);
 
     function handleSubmit() {
         activity.id ? updateActivity(activity) : createActivity(activity);
@@ -32,6 +40,8 @@ export default observer(function ActivityForm() {
         const { name, value } = event.target;
         setActivity({ ...activity, [name]: value });
     }
+
+    if (loadingInitial) return <LoadingComponent content="Loading Activity..." />
 
     return (
         // clearing property to clear any previous floats in HTML.

@@ -46,7 +46,10 @@ export default class ActivityStore {
     // Date - 04th May, 2023.
     loadActivity = async (id: string) => {
         let activity = this.getActivity(id);
-        if (activity) this.selectedActivity = activity;
+        if (activity) {
+            this.selectedActivity = activity;
+            return activity;
+        }
         else {
             this.setLoadingInitial(true);
             try {
@@ -54,6 +57,7 @@ export default class ActivityStore {
                 this.setActivity(activity);
                 this.selectedActivity = activity;
                 this.setLoadingInitial(false);
+                return activity;
             } catch (error) {
                 console.log(error);
                 this.setLoadingInitial(false);
@@ -131,7 +135,7 @@ export default class ActivityStore {
             await agent.Activities.update(activity);
             runInAction(() => {
                 this.activityRegistry.set(activity.id, activity);
-                this.selectedActivity = activity;
+                runInAction(() => this.selectedActivity = activity);
                 this.editMode = false;
                 this.loading = false;
             });

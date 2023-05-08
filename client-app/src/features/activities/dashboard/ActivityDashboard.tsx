@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 import { Grid } from "semantic-ui-react";
-import ActivityDetails from "../Details/ActivityDetails";
-import ActivityForm from "../form/ActivityForm";
 import ActivityList from "./ActivityList";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
