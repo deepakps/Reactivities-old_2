@@ -13,8 +13,12 @@ export const routes: RouteObject[] = [
             { path: '', element: <HomePage /> },
             { path: 'activities', element: <ActivityDashboard /> },
             { path: 'activities/:id', element: <ActivityDetails /> },
-            { path: 'createActivity', element: <ActivityForm /> },
-            { path: 'manage/:id', element: <ActivityForm /> }
+            // React generally preserve state of the Component. 
+            // As same component is preserved here, we either need to change the position of the component 
+            // or to provide a 'key' to distinguish.
+            // Date - 09th May, 2023.
+            { path: 'createActivity', element: <ActivityForm key='create' /> },
+            { path: 'manage/:id', element: <ActivityForm key='update' /> }
         ]
     }
 ]

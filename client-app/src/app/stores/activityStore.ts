@@ -14,7 +14,8 @@ export default class ActivityStore {
     editMode = false;
     loading = false;
     // Defaulted to true to resolve flickring issue on page refresh. Date - 01st May, 2023.
-    loadingInitial = true;
+    // Defaulted to false to handle loading indicator on page refresh for Create Activity. Date - 09th May, 2023.
+    loadingInitial = false;
 
     constructor() {
         makeAutoObservable(this)
