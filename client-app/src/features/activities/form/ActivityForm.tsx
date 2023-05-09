@@ -32,6 +32,8 @@ export default observer(function ActivityForm() {
 
     function handleSubmit() {
         if (!activity.id) {
+            // uuid is now generated at the client side instead of generating at the server side i.e. in the store.
+            // Date - 09th May, 2023.
             activity.id = uuid();
             createActivity(activity).then(() => navigate(`/activities/${activity.id}`));
         }

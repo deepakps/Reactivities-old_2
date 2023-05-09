@@ -15,7 +15,7 @@ export const routes: RouteObject[] = [
             { path: 'activities/:id', element: <ActivityDetails /> },
             // React generally preserve state of the Component. 
             // As same component is preserved here, we either need to change the position of the component 
-            // or to provide a 'key' to distinguish.
+            // or to provide a 'key' to distinguish
             // Date - 09th May, 2023.
             { path: 'createActivity', element: <ActivityForm key='create' /> },
             { path: 'manage/:id', element: <ActivityForm key='update' /> }
