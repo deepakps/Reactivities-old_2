@@ -28,6 +28,23 @@ export default class ActivityStore {
             Date.parse(a.date) - Date.parse(b.date));
     }
 
+    // This function will treat each activity date as key.
+    // reduce initial value is activity Array. Inside reduce if activity present by date then it will be 
+    // grouped with the Date, if not then the acitivity will be grouped individually.
+    // I.e. we will have array of Object, where each object has key as activity date & for each date we have array of activities.
+    // Date - 12th May, 2023.
+    get groupedActivities() {
+        let grpActivities = Object.entries(
+            this.activitiesByDate.reduce((activities, activity) => {
+                const date = activity.date;
+                activities[date] = activities[date] ? [...activities[date], activity] : [activity];
+                return activities;
+            }, {} as { [key: string]: Activity[] })
+        );
+        // console.log(grpActivities);
+        return grpActivities;
+    }
+
     loadActivities = async () => {
         // Uncommented to resolve single activity issue after refresh while routing. Date - 04th May, 2023.
         this.setLoadingInitial(true);
